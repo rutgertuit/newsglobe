@@ -16,7 +16,7 @@ function Scene() {
 
             <Globe />
 
-            <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={1} />
+            <Stars radius={100} depth={50} count={3000} factor={3} saturation={0} fade speed={0.2} />
 
             <OrbitControls
                 enablePan={false}
@@ -30,7 +30,7 @@ function Scene() {
             />
 
             <EffectComposer>
-                <Bloom luminanceThreshold={0.8} luminanceSmoothing={0.9} height={300} intensity={2} />
+                <Bloom luminanceThreshold={0.95} luminanceSmoothing={0.9} height={300} intensity={1} />
             </EffectComposer>
         </>
     );

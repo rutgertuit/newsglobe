@@ -18,7 +18,7 @@ const getGeoForHeadlines = async (headlines: string[], apiKey: string) => {
         const prompt = `Given these ${headlines.length} news headlines about global conflict, military movements, and politics, do two things:
 1. Translate the headline perfectly into Dutch.
 2. Return a JSON array of ${headlines.length} objects representing the event.
-Each object must have a 'lat' (latitude) and 'lng' (longitude) float for the location, and 'theme' string which must be exactly one of: "KINETISCH", "CYBER", "POLITIEK", or "ANDERS". Also include a 'headline' string with your translated Dutch text. If the event is global or uncertain, use coordinates of a major relevant capital (like Washington DC, Moscow, UN). Return ONLY valid JSON array with NO markdown wrapping or \`\`\`json blocks.
+Each object must have a 'lat' (latitude) and 'lng' (longitude) float for the location, and 'theme' string which must be exactly one of: "KINETISCH", "CYBER", "POLITIEK", or "ANDERS". IMPORTANT: If the headline is about sports, video games (like Xbox or PlayStation), movies, or entertainment, you MUST classify its theme as "ANDERS". Also include a 'headline' string with your translated Dutch text. If the event is global or uncertain, use coordinates of a major relevant capital (like Washington DC, Moscow, UN). Return ONLY valid JSON array with NO markdown wrapping or \`\`\`json blocks.
 Headlines:
 ` + headlines.map((h, i) => `${i + 1}. ${h}`).join('\n');
 
@@ -75,7 +75,7 @@ export async function GET() {
     }
 
     try {
-        const query = encodeURIComponent('war OR conflict OR military OR missiles OR invasion OR geopolitical OR crisis OR NATO OR tension');
+        const query = encodeURIComponent('(war OR military OR missiles OR invasion OR NATO OR troops) -(xbox OR playstation OR game OR movie OR sports OR nintendo)');
 
         // Fetch last 30 days
         const fromDate = new Date();
@@ -106,10 +106,13 @@ export async function GET() {
             lng: extractedDataList[index]?.lng || getRandomGlobalCapital().lng,
         }));
 
-        cachedThreats = threats;
+        // Filter out the 'ANDERS' theme completely so we don't display Xbox/Entertainment on the map
+        const filteredThreats = threats.filter((t: any) => t.theme !== 'ANDERS');
+
+        cachedThreats = filteredThreats;
         cacheTime = now;
 
-        return NextResponse.json(threats);
+        return NextResponse.json(filteredThreats);
     } catch (error: any) {
         return NextResponse.json({ error: error.message }, { status: 500 });
     }

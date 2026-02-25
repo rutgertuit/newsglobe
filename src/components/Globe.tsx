@@ -62,9 +62,12 @@ export default function Globe() {
             .hexSideColor(() => 'rgba(255, 42, 42, 0.1)')
             .hexTransitionDuration(1000);
 
+        // Limit the heavy animations to only the most severe hotspots to reduce visual clutter and flickering
+        const topThreats = [...filteredThreats].sort((a, b) => b.intensity - a.intensity).slice(0, 12);
+
         // Attack Arcs / Connections from hubs (e.g. Washington DC and Geneva)
         const hubs = [{ lat: 38.8951, lng: -77.0364 }, { lat: 46.2044, lng: 6.1432 }];
-        const arcsData = filteredThreats.map((t, i) => {
+        const arcsData = topThreats.map((t, i) => {
             const hub = hubs[i % hubs.length];
             return {
                 startLat: hub.lat,
@@ -85,7 +88,7 @@ export default function Globe() {
             .arcAltitudeAutoScale(0.3);
 
         // Labels mapping the threat location to text
-        const labelsData = filteredThreats.filter(t => t.intensity > 4).map(t => ({
+        const labelsData = topThreats.filter(t => t.intensity > 4).map(t => ({
             lat: t.lat,
             lng: t.lng,
             text: t.headline.length > 25 ? t.headline.substring(0, 25) + '...' : t.headline,
@@ -105,7 +108,7 @@ export default function Globe() {
             .labelAltitude(0.05);
 
         // Sonar Rings
-        const ringsData = filteredThreats.map((t) => ({
+        const ringsData = topThreats.map((t) => ({
             lat: t.lat,
             lng: t.lng,
             maxR: t.intensity * 3,

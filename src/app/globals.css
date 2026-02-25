@@ -52,7 +52,7 @@ h6 {
   background-size: 100% 4px;
   pointer-events: none;
   z-index: 50;
-  opacity: 0.6;
+  opacity: 0.15;
 }
 
 .vignette {
@@ -69,36 +69,6 @@ h6 {
 /* Glitch text effect for critical alerts */
 .text-glitch {
   color: var(--alert-red);
-  animation: mild-glitch 3s infinite;
-}
-
-@keyframes mild-glitch {
-
-  0%,
-  100% {
-    transform: translate(0);
-    text-shadow: none;
-  }
-
-  92% {
-    transform: translate(0);
-    text-shadow: none;
-  }
-
-  94% {
-    transform: translate(-1px, 1px);
-    text-shadow: -1px 0 blue;
-  }
-
-  96% {
-    transform: translate(1px, -1px);
-    text-shadow: 1px 0 red;
-  }
-
-  98% {
-    transform: translate(-1px, 0);
-    text-shadow: none;
-  }
 }
 
 /* Animations */
@@ -141,7 +111,7 @@ h6 {
 }
 
 .animate-pulse-ring {
-  animation: pulse-ring 2s cubic-bezier(0.25, 1, 0.5, 1) infinite;
+  animation: pulse-ring 5s cubic-bezier(0.25, 1, 0.5, 1) infinite;
 }
 
 @media (prefers-reduced-motion: reduce) {
