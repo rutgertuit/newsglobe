@@ -44,7 +44,7 @@ export default function Globe() {
     useEffect(() => {
         if (!globeInstance.current) return;
 
-        const filteredThreats = threats.filter(t => activeTheme === 'ALL' || t.theme === activeTheme);
+        const filteredThreats = threats.filter(t => activeTheme === 'ALLES' || t.theme === activeTheme);
 
         // Heatmap Hexagons
         const hexBinData = filteredThreats.map(t => ({
@@ -71,7 +71,7 @@ export default function Globe() {
                 startLng: hub.lng,
                 endLat: t.lat,
                 endLng: t.lng,
-                color: t.theme === 'KINETIC' ? 'rgba(255, 42, 42, 0.8)' : 'rgba(0, 229, 255, 0.8)',
+                color: t.theme === 'KINETISCH' ? 'rgba(255, 42, 42, 0.8)' : 'rgba(0, 229, 255, 0.8)',
             };
         });
 

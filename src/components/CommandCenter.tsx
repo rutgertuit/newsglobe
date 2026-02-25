@@ -53,7 +53,7 @@ export default function CommandCenter() {
             try {
                 const res = await fetch('/api/synth', {
                     method: 'POST',
-                    body: JSON.stringify({ text: `Alert: ${text}` })
+                    body: JSON.stringify({ text: `Waarschuwing: ${text}` })
                 });
 
                 if (res.ok) {
@@ -128,7 +128,7 @@ export default function CommandCenter() {
                 try {
                     const res = await fetch('/api/synth', {
                         method: 'POST',
-                        body: JSON.stringify({ text: `Alert: ${nextAnnounce.headline}` })
+                        body: JSON.stringify({ text: `Waarschuwing: ${nextAnnounce.headline}` })
                     });
                     if (res.ok) {
                         const arrayBuffer = await res.arrayBuffer();

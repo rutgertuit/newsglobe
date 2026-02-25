@@ -15,7 +15,10 @@ const getRandomGlobalCapital = () => {
 
 const getGeoForHeadlines = async (headlines: string[], apiKey: string) => {
     try {
-        const prompt = `Given these ${headlines.length} news headlines about global conflict, military movements, and politics, return a JSON array of ${headlines.length} objects representing the event. Each object must have a 'lat' (latitude) and 'lng' (longitude) float for the location. Also give each a 'theme' string which must be exactly one of: "KINETIC", "CYBER", "POLITICS", or "OTHER". If the event is global or uncertain, use coordinates of a major relevant capital (like Washington DC, Moscow, UN). Return ONLY valid JSON array with NO markdown wrapping or \`\`\`json blocks.
+        const prompt = `Given these ${headlines.length} news headlines about global conflict, military movements, and politics, do two things:
+1. Translate the headline perfectly into Dutch.
+2. Return a JSON array of ${headlines.length} objects representing the event.
+Each object must have a 'lat' (latitude) and 'lng' (longitude) float for the location, and 'theme' string which must be exactly one of: "KINETISCH", "CYBER", "POLITIEK", or "ANDERS". Also include a 'headline' string with your translated Dutch text. If the event is global or uncertain, use coordinates of a major relevant capital (like Washington DC, Moscow, UN). Return ONLY valid JSON array with NO markdown wrapping or \`\`\`json blocks.
 Headlines:
 ` + headlines.map((h, i) => `${i + 1}. ${h}`).join('\n');
 
@@ -54,7 +57,7 @@ export async function GET() {
         const mockThreats = [
             {
                 id: Math.random().toString(36).substr(2, 9),
-                headline: 'Cyber attack localized in Eastern Europe grid sector',
+                headline: 'Cyberaanval gelokaliseerd in Oost-Europees stroomnet',
                 intensity: 8,
                 url: 'https://news.google.com',
                 timestamp: new Date().toISOString(),
@@ -72,7 +75,7 @@ export async function GET() {
     }
 
     try {
-        const query = encodeURIComponent('war OR conflict OR Ukraine OR Israel OR Putin OR military OR geopolitical');
+        const query = encodeURIComponent('war OR conflict OR military OR missiles OR invasion OR geopolitical OR crisis OR NATO OR tension');
 
         // Fetch last 30 days
         const fromDate = new Date();
@@ -94,11 +97,11 @@ export async function GET() {
 
         const threats = topArticles.map((article: any, index: number) => ({
             id: Math.random().toString(36).substr(2, 9),
-            headline: article.title,
+            headline: extractedDataList[index]?.headline || article.title,
             url: article.url,
             intensity: Math.floor(Math.random() * 5) + 3,
             timestamp: article.publishedAt || new Date().toISOString(),
-            theme: extractedDataList[index]?.theme?.toUpperCase() || 'OTHER',
+            theme: extractedDataList[index]?.theme?.toUpperCase() || 'ANDERS',
             lat: extractedDataList[index]?.lat || getRandomGlobalCapital().lat,
             lng: extractedDataList[index]?.lng || getRandomGlobalCapital().lng,
         }));

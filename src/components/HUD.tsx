@@ -38,7 +38,7 @@ function useDecryptText(text: string, speed = 30) {
 const DefIntelStream = () => {
     const threats = useWarStore((state) => state.threats);
     const activeTheme = useWarStore((state) => state.activeTheme);
-    const filteredThreats = threats.filter(t => activeTheme === 'ALL' || t.theme === activeTheme);
+    const filteredThreats = threats.filter(t => activeTheme === 'ALLES' || t.theme === activeTheme);
 
     const streamStyle = {
         position: 'absolute' as const,
@@ -83,11 +83,11 @@ const DefIntelStream = () => {
     return (
         <div style={streamStyle}>
             <div style={headerStyle}>
-                <span>[ TOP SECRET // CODE: UMBRA ]</span>
+                <span>[ ZEER GEHEIM // CODE: UMBRA ]</span>
                 <span className="animate-pulse-ring" style={dotStyle}></span>
             </div>
             <div style={listStyle} className="no-scrollbar">
-                {filteredThreats.length === 0 && <p style={{ color: 'var(--text-muted)' }}>Monitoring global traffic...</p>}
+                {filteredThreats.length === 0 && <p style={{ color: 'var(--text-muted)' }}>MONITOREN GLOBAAL VERKEER...</p>}
                 {filteredThreats.map((t, i) => (
                     <IntelItem key={t.id + i} text={t.headline} time={t.timestamp} alert={t.intensity > 5} url={t.url} />
                 ))}
@@ -125,11 +125,11 @@ const IntelItem = ({ text, time, alert, url }: { text: string; time: string; ale
             onMouseLeave={() => setIsHovered(false)}
             onClick={() => url && window.open(url, '_blank')}
             className={alert ? 'text-glitch' : ''}
-            title={url ? "Click to view source" : ""}
+            title={url ? "Klik om bron te bekijken" : ""}
         >
             <div style={timeStyle}>
                 {new Date(time).toISOString().split('T')[1].substring(0, 8)}Z
-                {url && <span style={{ marginLeft: '8px', color: 'var(--electric-cyan)', fontWeight: 'bold' }}>[ VIEW LINK ]</span>}
+                {url && <span style={{ marginLeft: '8px', color: 'var(--electric-cyan)', fontWeight: 'bold' }}>[ BEKIJK LINK ]</span>}
             </div>
             <div style={{ wordWrap: 'break-word', wordBreak: 'break-word' }}>{decrypted}</div>
         </motion.div>
@@ -182,8 +182,8 @@ const BloodMoneyTicker = () => {
 
 const Header = () => (
     <div style={{ position: 'absolute', top: '40px', left: '40px', pointerEvents: 'none', color: 'var(--text-primary)', fontFamily: "'Share Tech Mono', monospace", zIndex: 50 }}>
-        <h1 style={{ letterSpacing: '0.2em', fontSize: '32px', fontWeight: 'bold' }}>DIGITAL <span style={{ color: 'var(--alert-red)' }}>WAR</span> ROOM</h1>
-        <h2 style={{ fontSize: '14px', color: 'var(--electric-cyan)', marginTop: '4px', opacity: 0.8, textTransform: 'uppercase' }}>The Eye of Providence // Global Subnet Monitor</h2>
+        <h1 style={{ letterSpacing: '0.2em', fontSize: '32px', fontWeight: 'bold' }}>DIGITALE <span style={{ color: 'var(--alert-red)' }}>OORLOGS</span>KAMER</h1>
+        <h2 style={{ fontSize: '14px', color: 'var(--electric-cyan)', marginTop: '4px', opacity: 0.8, textTransform: 'uppercase' }}>Het Alziend Oog // Globale Subnet Monitor</h2>
     </div>
 );
 
@@ -191,7 +191,7 @@ const FilterBar = () => {
     const activeTheme = useWarStore((state) => state.activeTheme);
     const setActiveTheme = useWarStore((state) => state.setActiveTheme);
 
-    const themes = ['ALL', 'KINETIC', 'CYBER', 'POLITICS', 'OTHER'];
+    const themes = ['ALLES', 'KINETISCH', 'CYBER', 'POLITIEK', 'ANDERS'];
 
     const barStyle = {
         position: 'absolute' as const,

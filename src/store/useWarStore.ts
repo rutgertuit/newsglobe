@@ -42,7 +42,7 @@ export const useWarStore = create<WarStoreState>((set) => ({
         { symbol: 'NOC', price: 470.15, change: 3.1, trend: 'up' },
     ],
     selectedCountry: null,
-    activeTheme: 'ALL',
+    activeTheme: 'ALLES',
     addThreat: (threat) =>
         set((state) => ({
             threats: [...state.threats, threat],

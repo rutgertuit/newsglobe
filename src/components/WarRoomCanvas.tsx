@@ -24,7 +24,9 @@ function Scene() {
                 minDistance={100}
                 maxDistance={500}
                 autoRotate
-                autoRotateSpeed={0.5}
+                autoRotateSpeed={0.2}
+                enableDamping={true}
+                dampingFactor={0.05}
             />
 
             <EffectComposer>
