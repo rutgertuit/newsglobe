@@ -110,7 +110,7 @@ export default function Globe() {
             lng: t.lng,
             maxR: t.intensity * 3,
             propagationSpeed: 1,
-            repeatPeriod: 1000,
+            repeatPeriod: 800 + Math.random() * 1500,
         }));
 
         globeInstance.current

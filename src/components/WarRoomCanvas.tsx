@@ -12,7 +12,7 @@ function Scene() {
     return (
         <>
             <ambientLight intensity={0.5} color="#00e5ff" />
-            <directionalLight position={[10, 20, 10]} intensity={2} color="#ffffff" />
+            <directionalLight position={[10, 20, 10]} intensity={0.6} color="#ffffff" />
 
             <Globe />
 
