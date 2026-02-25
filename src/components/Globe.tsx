@@ -31,7 +31,7 @@ export default function Globe() {
                 .globeImageUrl('//unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
                 .bumpImageUrl('//unpkg.com/three-globe/example/img/earth-topology.png')
                 .polygonsData(countries.features)
-                .polygonAltitude(0.01)
+                .polygonAltitude(0.015)
                 .polygonCapColor(() => 'rgba(0, 0, 0, 0.4)')
                 .polygonSideColor(() => 'rgba(0, 229, 255, 0.05)')
                 .polygonStrokeColor(() => 'rgba(0, 229, 255, 0.4)')
@@ -62,14 +62,18 @@ export default function Globe() {
             .hexSideColor(() => 'rgba(255, 42, 42, 0.1)')
             .hexTransitionDuration(1000);
 
-        // Attack Arcs
-        const arcsData = filteredThreats.map((t) => ({
-            startLat: t.lat + (Math.random() * 40 - 20),
-            startLng: t.lng - (Math.random() * 40 - 20),
-            endLat: t.lat,
-            endLng: t.lng,
-            color: 'rgba(0, 229, 255, 1)',
-        }));
+        // Attack Arcs / Connections from hubs (e.g. Washington DC and Geneva)
+        const hubs = [{ lat: 38.8951, lng: -77.0364 }, { lat: 46.2044, lng: 6.1432 }];
+        const arcsData = filteredThreats.map((t, i) => {
+            const hub = hubs[i % hubs.length];
+            return {
+                startLat: hub.lat,
+                startLng: hub.lng,
+                endLat: t.lat,
+                endLng: t.lng,
+                color: t.theme === 'KINETIC' ? 'rgba(255, 42, 42, 0.8)' : 'rgba(0, 229, 255, 0.8)',
+            };
+        });
 
         globeInstance.current
             .arcsData(arcsData)
@@ -77,7 +81,28 @@ export default function Globe() {
             .arcDashLength(0.4)
             .arcDashGap(0.2)
             .arcDashInitialGap(() => Math.random() * 5)
-            .arcDashAnimateTime(2000);
+            .arcDashAnimateTime(3000)
+            .arcAltitudeAutoScale(0.3);
+
+        // Labels mapping the threat location to text
+        const labelsData = filteredThreats.filter(t => t.intensity > 4).map(t => ({
+            lat: t.lat,
+            lng: t.lng,
+            text: t.headline.length > 25 ? t.headline.substring(0, 25) + '...' : t.headline,
+            color: 'white',
+            size: 0.8
+        }));
+
+        globeInstance.current
+            .labelsData(labelsData)
+            .labelLat('lat')
+            .labelLng('lng')
+            .labelText('text')
+            .labelSize('size')
+            .labelDotRadius(0.3)
+            .labelColor('color')
+            .labelResolution(2)
+            .labelAltitude(0.05);
 
         // Sonar Rings
         const ringsData = filteredThreats.map((t) => ({
