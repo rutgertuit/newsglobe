@@ -4,7 +4,7 @@ import CommandCenter from '@/components/CommandCenter';
 
 export default function Home() {
   return (
-    <main className="relative w-screen h-screen bg-[var(--bg-void)] crt-flicker">
+    <main className="relative w-screen h-screen bg-[var(--bg-void)]">
       <CommandCenter />
       {/* 3D Global View */}
       <WarRoomCanvas />

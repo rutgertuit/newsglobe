@@ -89,7 +89,19 @@ export async function GET() {
             throw new Error(data.message || 'News API failed');
         }
 
-        const topArticles = data.articles.filter((a: any) => a.title).slice(0, 40);
+        const topArticles = data.articles.filter((a: any) => {
+            if (!a.title) return false;
+            const t = a.title.toLowerCase();
+            return !(
+                t.includes('xbox') ||
+                t.includes('playstation') ||
+                t.includes('game') ||
+                t.includes('nintendo') ||
+                t.includes('movie') ||
+                t.includes('entertainment')
+            );
+        }).slice(0, 40);
+
         const headlines = topArticles.map((a: any) => a.title);
 
         // Extract real world coordinates with Gemini based on Headline NLP

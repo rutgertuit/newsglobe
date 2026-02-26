@@ -31,11 +31,11 @@ export default function Globe() {
                 .globeImageUrl('//unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
                 .bumpImageUrl('//unpkg.com/three-globe/example/img/earth-topology.png')
                 .polygonsData(countries.features)
-                .polygonAltitude(0.015)
+                .polygonAltitude(0.005)
                 .polygonCapColor(() => 'rgba(0, 0, 0, 0.4)')
-                .polygonSideColor(() => 'rgba(0, 229, 255, 0.05)')
-                .polygonStrokeColor(() => 'rgba(0, 229, 255, 0.4)')
-                .showAtmosphere(true)
+                .polygonSideColor(() => 'rgba(0, 0, 0, 0.0)')
+                .polygonStrokeColor(() => 'rgba(0, 229, 255, 0.15)')
+                .showAtmosphere(false)
                 .atmosphereColor('#00e5ff')
                 .atmosphereAltitude(0.15);
         }
@@ -63,7 +63,7 @@ export default function Globe() {
             .hexTransitionDuration(1000);
 
         // Limit the heavy animations to only the most severe hotspots to reduce visual clutter and flickering
-        const topThreats = [...filteredThreats].sort((a, b) => b.intensity - a.intensity).slice(0, 12);
+        const topThreats = [...filteredThreats].sort((a, b) => b.intensity - a.intensity).slice(0, 5);
 
         // Attack Arcs / Connections from hubs (e.g. Washington DC and Geneva)
         const hubs = [{ lat: 38.8951, lng: -77.0364 }, { lat: 46.2044, lng: 6.1432 }];

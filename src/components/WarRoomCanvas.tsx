@@ -3,7 +3,6 @@
 import { Suspense } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { Environment, OrbitControls, Stars } from '@react-three/drei';
-import { EffectComposer, Bloom, Vignette } from '@react-three/postprocessing';
 import dynamic from 'next/dynamic';
 
 const Globe = dynamic(() => import('./Globe'), { ssr: false });
@@ -16,7 +15,7 @@ function Scene() {
 
             <Globe />
 
-            <Stars radius={100} depth={50} count={3000} factor={3} saturation={0} fade speed={0.2} />
+            <Stars radius={100} depth={50} count={1500} factor={2} saturation={0} fade={false} speed={0} />
 
             <OrbitControls
                 enablePan={false}
@@ -28,10 +27,6 @@ function Scene() {
                 enableDamping={true}
                 dampingFactor={0.05}
             />
-
-            <EffectComposer>
-                <Bloom luminanceThreshold={0.95} luminanceSmoothing={0.9} height={300} intensity={1} />
-            </EffectComposer>
         </>
     );
 }
